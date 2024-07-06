@@ -1,12 +1,15 @@
-import { Bot, limit } from "./deps.ts";
+import { Bot, hydrateFiles } from "./deps.ts";
 import { BOT_TOKEN } from "./helpers/constants.ts";
+import MyContext from "./helpers/context.ts";
+import plugins from "./composer/plugins.ts";
 import inGroup from "./composer/in-group.ts";
 import callbacks from "./composer/callbacks.ts";
 import onErrorHandler from "./handlers/on_error_handler.ts";
 
-export const bot = new Bot(BOT_TOKEN);
+export const bot = new Bot<MyContext>(BOT_TOKEN);
 
-bot.use(limit());
+bot.api.config.use(hydrateFiles(bot.token));
+bot.use(plugins);
 
 bot.command("start", async (ctx) => {
   await ctx.react("🐳");
