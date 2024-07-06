@@ -1,4 +1,4 @@
-import { Composer } from "../../deps.ts";
+import { Composer } from "../deps.ts";
 import onCatchHandler from "../handler/on_catch_handler.ts";
 
 const composer = new Composer();

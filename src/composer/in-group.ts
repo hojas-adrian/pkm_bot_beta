@@ -1,4 +1,4 @@
-import { Composer } from "../../deps.ts";
+import { Composer } from "../deps.ts";
 import { catsh } from "../keyboards/keyboards.ts";
 
 const composer = new Composer();

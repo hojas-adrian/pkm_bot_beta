@@ -1,4 +1,4 @@
-import { Context } from "../../deps.ts";
+import { Context } from "../deps.ts";
 import { name } from "../helpers/utils.ts";
 
 export default async (ctx: Context) => {

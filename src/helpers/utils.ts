@@ -1,4 +1,4 @@
-import { Context } from "../../deps.ts";
+import { Context } from "../deps.ts";
 
 export const name = (ctx: Context) => {
   return ctx.from?.username

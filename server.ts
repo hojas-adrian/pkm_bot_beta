@@ -1,4 +1,4 @@
-import { webhookCallback } from "./deps.ts";
+import { webhookCallback } from "./src/deps.ts";
 import { bot } from "./src/bot.ts";
 
 const handleUpdate = webhookCallback(bot, "std/http");
