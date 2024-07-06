@@ -7,7 +7,7 @@ export default async (ctx: MyContext) => {
     return await ctx.reply("responde a un documento comepinga");
   }
 
-  if (typeof ctx.match !== "string") {
+  if (ctx.match === "" || typeof ctx.match !== "string") {
     return await ctx.reply("Y los datos? :)");
   }
 
@@ -17,7 +17,7 @@ export default async (ctx: MyContext) => {
   const url = new URL(file.getUrl());
   const sticker = await ctx.replyWithSticker(new InputFile(url));
 
-  const [file_id, name, id, freq, sex] = [
+  const [file_id, id, name, freq, sex] = [
     sticker.sticker.file_id,
     ...(ctx.match.split(" ") as [
       string,
@@ -28,8 +28,8 @@ export default async (ctx: MyContext) => {
   ];
 
   await setKv("pkm_basic", id, {
-    name,
     id,
+    name,
     file_id,
     freq: +freq,
     sex,
