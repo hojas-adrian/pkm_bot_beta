@@ -1,11 +1,23 @@
-import { session } from "../deps.ts";
+import { pkm_basic } from "./models.ts";
 
 export type SessionData = {
-  pizzaCount: number;
+  admin?: SessionAdmin;
+  pokedex: SessionPokedex;
 };
 
-function initial(): SessionData {
-  return { pizzaCount: 0 };
-}
+export type SessionAdmin = {
+  toSave: {
+    current: string | undefined;
+    data: { [key: string]: pkm_basic };
+  };
+};
 
-export default session({ initial });
+export const initialAdmin = () => {
+  return undefined;
+};
+
+type SessionPokedex = undefined;
+
+export const initialPokedex = (): SessionPokedex => {
+  return;
+};

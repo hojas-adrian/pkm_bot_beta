@@ -1,6 +1,7 @@
 import { InputFile } from "../deps.ts";
 import MyContext from "../helpers/context.ts";
-import { getKv, setKv } from "../helpers/kv_connector.ts";
+import { SessionAdmin } from "../helpers/session.ts";
+import { initAdmin, toSave } from "../helpers/session_connector.ts";
 
 export default async (ctx: MyContext) => {
   if (!ctx.message?.reply_to_message?.document?.file_id) {
@@ -11,39 +12,38 @@ export default async (ctx: MyContext) => {
     return await ctx.reply("Y los datos? :)");
   }
 
+  const [id, name, freq, sex] = ctx.match.split(" ") as [
+    string,
+    string,
+    string,
+    "male" | "female" | undefined
+  ];
+
+  if (!ctx.session.admin) {
+    initAdmin(ctx);
+  }
+
+  if ((ctx.session.admin as SessionAdmin).toSave.data[id]) {
+    return await ctx.reply("ya hay un pokemon con este id");
+  }
+
   const file = await ctx.api.getFile(
     ctx.message?.reply_to_message?.document?.file_id
   );
   const url = new URL(file.getUrl());
   const sticker = await ctx.replyWithSticker(new InputFile(url));
 
-  const [file_id, id, name, freq, sex] = [
-    sticker.sticker.file_id,
-    ...(ctx.match.split(" ") as [
-      string,
-      string,
-      string,
-      "male" | "female" | undefined
-    ]),
-  ];
+  const file_id = sticker.sticker.file_id;
 
-  await setKv("pkm_basic", id, {
+  const data = {
     id,
     name,
     file_id,
     freq: +freq,
     sex,
-  });
+  };
 
-  await setKv("db_version", "", crypto.randomUUID());
-
-  const val = await getKv("pkm_basic", id);
-
-  const data = val.value;
-
-  if (!data) {
-    return await ctx.reply("Los datos no estan guardados");
-  }
+  toSave(ctx, data, id);
 
   await ctx.reply(
     `name: ${data.name} ${
