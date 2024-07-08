@@ -1,7 +1,8 @@
 import { InputFile } from "../deps.ts";
 import MyContext from "../helpers/context.ts";
-import { SessionAdmin } from "../helpers/session.ts";
-import { initAdmin, toSave } from "../helpers/session_connector.ts";
+import { setDatatoSave } from "../helpers/session_actions.ts";
+import { getDataString } from "../helpers/utils.ts";
+import greet from "../menus/save_in_kv.ts";
 
 export default async (ctx: MyContext) => {
   if (!ctx.message?.reply_to_message?.document?.file_id) {
@@ -19,12 +20,8 @@ export default async (ctx: MyContext) => {
     "male" | "female" | undefined
   ];
 
-  if (!ctx.session.admin) {
-    initAdmin(ctx);
-  }
-
-  if ((ctx.session.admin as SessionAdmin).toSave.data[id]) {
-    return await ctx.reply("ya hay un pokemon con este id");
+  if (ctx.session.admin?.toSave) {
+    return await ctx.reply("ya hay un pokemon en proceso");
   }
 
   const file = await ctx.api.getFile(
@@ -43,11 +40,9 @@ export default async (ctx: MyContext) => {
     sex,
   };
 
-  toSave(ctx, data, id);
+  const msg = await ctx.reply(getDataString(data), {
+    reply_markup: greet,
+  });
 
-  await ctx.reply(
-    `name: ${data.name} ${
-      data.sex ? (sex === "male" ? "♂" : "♀") : ""
-    }\nfrecuencia: ${data.freq}\nid: ${data.file_id}\n\n#${data.id}`
-  );
+  setDatatoSave(ctx, data, msg.message_id);
 };

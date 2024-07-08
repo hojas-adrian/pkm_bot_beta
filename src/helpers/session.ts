@@ -7,8 +7,8 @@ export type SessionData = {
 
 export type SessionAdmin = {
   toSave: {
-    current: string | undefined;
-    data: { [key: string]: pkm_basic };
+    message_id: number | undefined;
+    data: pkm_basic | undefined;
   };
 };
 

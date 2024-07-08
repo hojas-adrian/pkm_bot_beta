@@ -7,7 +7,7 @@ export const setKv = async (
   id: string,
   value: pkm_basic | `${string}-${string}-${string}-${string}-${string}`
 ) => {
-  await kv.set([field, id], value);
+  return await kv.set([field, id], value);
 };
 
 export const delKv = async (field: string, id: string) => {
