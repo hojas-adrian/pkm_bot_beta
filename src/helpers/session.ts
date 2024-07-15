@@ -6,10 +6,7 @@ export type SessionData = {
 };
 
 export type SessionAdmin = {
-  toSave: {
-    message_id: number | undefined;
-    data: pkm_basic | undefined;
-  };
+  toSave: pkm_basic | undefined;
 };
 
 export const initialAdmin = () => {

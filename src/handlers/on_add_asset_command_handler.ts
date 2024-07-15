@@ -40,9 +40,9 @@ export default async (ctx: MyContext) => {
     sex,
   };
 
-  const msg = await ctx.reply(getDataString(data), {
+  await ctx.reply(getDataString(data), {
     reply_markup: greet,
   });
 
-  setDatatoSave(ctx, data, msg.message_id);
+  setDatatoSave(ctx, data);
 };

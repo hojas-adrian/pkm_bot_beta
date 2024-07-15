@@ -5,23 +5,12 @@ export const deleteDatatoSave = (ctx: MyContext) => {
   ctx.session.admin = undefined;
 };
 
-export const getDataMessageId = (ctx: MyContext) => {
-  return ctx.session.admin?.toSave.message_id || false;
-};
-
 export const getDatatoSave = (ctx: MyContext) => {
-  return ctx.session.admin?.toSave.data || false;
+  return ctx.session.admin?.toSave || false;
 };
 
-export const setDatatoSave = (
-  ctx: MyContext,
-  data: pkm_basic,
-  messageId: number
-) => {
+export const setDatatoSave = (ctx: MyContext, data: pkm_basic) => {
   ctx.session.admin = {
-    toSave: {
-      message_id: messageId,
-      data,
-    },
+    toSave: data,
   };
 };
