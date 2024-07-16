@@ -4,7 +4,7 @@ import {
   sendStickerToPokedex,
 } from "../helpers/actions.ts";
 import { MyMenuContext } from "../helpers/context.ts";
-import { setKv } from "../helpers/kv_actions.ts";
+import { setPkmBasic } from "../helpers/kv_actions.ts";
 import { deleteDatatoSave, getDatatoSave } from "../helpers/session_actions.ts";
 import { getDataString } from "../helpers/utils.ts";
 
@@ -22,9 +22,9 @@ export default async (ctx: MyMenuContext) => {
     return ctx.menu.close();
   }
 
-  const saved = await setKv("pkm-basic", data.id, data);
+  const saved = await setPkmBasic(data.id, data);
 
-  if (!saved.ok) {
+  if (!saved) {
     await ctx.answerCallbackQuery("error en la base de datos");
     return ctx.menu.close();
   }

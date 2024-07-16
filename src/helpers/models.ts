@@ -5,3 +5,5 @@ export type pkm_basic = {
   freq: number;
   sex?: "male" | "female";
 };
+
+export type kv_data = pkm_basic;
