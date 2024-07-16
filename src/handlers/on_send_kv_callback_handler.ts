@@ -4,7 +4,7 @@ import {
   sendStickerToPokedex,
 } from "../helpers/actions.ts";
 import { MyMenuContext } from "../helpers/context.ts";
-import { setPkmBasic } from "../helpers/kv_actions.ts";
+import { setAsset } from "../helpers/kv_actions.ts";
 import { deleteDatatoSave, getDatatoSave } from "../helpers/session_actions.ts";
 import { getDataString } from "../helpers/utils.ts";
 
@@ -14,7 +14,6 @@ export default async (ctx: MyMenuContext) => {
   }
 
   const data = getDatatoSave(ctx);
-
   deleteDatatoSave(ctx);
 
   if (!data) {
@@ -22,14 +21,20 @@ export default async (ctx: MyMenuContext) => {
     return ctx.menu.close();
   }
 
-  const saved = await setPkmBasic(data.id, data);
+  const saved = await setAsset(data);
 
   if (!saved) {
     await ctx.answerCallbackQuery("error en la base de datos");
     return ctx.menu.close();
   }
 
-  const stk = await sendStickerToPokedex(ctx, data.file_id);
+  await ctx.reply("enviado correctamente", {
+    reply_parameters: {
+      message_id: ctx.callbackQuery?.message?.message_id || 0,
+    },
+  });
+
+  const stk = await sendStickerToPokedex(ctx, data.data.file_id);
   await sendMessageToPokedex(ctx, getDataString(data), stk.message_id);
 
   await ctx.answerCallbackQuery("datos guardados");

@@ -1,5 +1,4 @@
 import { Composer, limit, session } from "../deps.ts";
-// import session from "../helpers/session.ts";
 import MyContext from "../helpers/context.ts";
 import { initialAdmin, initialPokedex } from "../helpers/session.ts";
 

@@ -1,6 +1,6 @@
 import MyContext from "./context.ts";
 import { User, ChatFullInfo } from "../deps.ts";
-import { pkm_basic } from "./models.ts";
+import { input, params_set_functios } from "./models.ts";
 import { VERSION } from "./constants.ts";
 import { isAdmin, isSuperAdmin } from "./actions.ts";
 
@@ -35,10 +35,20 @@ export const sendSticker = async (
     },
   });
 
-export const getDataString = (data: pkm_basic) => {
-  return `name: ${data.name} ${
-    data.sex ? (data.sex === "male" ? "♂" : "♀") : ""
-  }\nfrecuencia: ${data.freq}\nid: ${data.file_id}\n\n#${data.id}`;
+export const getDataString = (data: params_set_functios) => {
+  switch (data.type) {
+    case "pkm": {
+      return `type: ${data.type}\nname: ${data.data.name} ${
+        data.data.sex ? (data.data.sex === "male" ? "♂" : "♀") : ""
+      }\nfrecuencia: ${data.data.freq}\nid: ${data.data.file_id}\n\n#${
+        data.data.id
+      }`;
+    }
+
+    case "npc": {
+      return `type: ${data.type}\nname: ${data.data.name}\nid: ${data.data.file_id}\n\n#${data.data.id}`;
+    }
+  }
 };
 
 export const getUserData = (user: User) => {
@@ -77,5 +87,74 @@ const getRole = (ctx: MyContext) => {
 
   if (isAdmin(ctx)) {
     return "admin";
+  }
+};
+
+export const getData = (text: string) => {
+  const [type, id, name, freq, sex] = text.split(" . ") as input;
+
+  switch (type) {
+    case "npc":
+      return {
+        type,
+        data: {
+          id,
+          name,
+        },
+      };
+
+    case "pkm":
+      return {
+        type,
+        data: {
+          id,
+          name,
+          freq: +freq,
+          sex,
+        },
+      };
+  }
+};
+
+export const addStickerId = (
+  data:
+    | {
+        type: "npc";
+        data: {
+          id: string;
+          name: string;
+          freq?: undefined;
+          sex?: undefined;
+        };
+      }
+    | {
+        type: "pkm";
+        data: {
+          id: string;
+          name: string;
+          freq: number;
+          sex: "male" | "female" | undefined;
+        };
+      },
+  file_id: string
+) => {
+  switch (data.type) {
+    case "npc":
+      return {
+        type: data.type,
+        data: {
+          ...data.data,
+          file_id,
+        },
+      };
+
+    case "pkm":
+      return {
+        type: data.type,
+        data: {
+          ...data.data,
+          file_id,
+        },
+      };
   }
 };

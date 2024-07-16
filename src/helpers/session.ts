@@ -1,4 +1,4 @@
-import { pkm_basic } from "./models.ts";
+import { params_set_functios } from "./models.ts";
 
 export type SessionData = {
   admin?: SessionAdmin;
@@ -6,7 +6,7 @@ export type SessionData = {
 };
 
 export type SessionAdmin = {
-  toSave: pkm_basic | undefined;
+  toSave: params_set_functios;
 };
 
 export const initialAdmin = () => {
