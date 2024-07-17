@@ -4,8 +4,8 @@ const kv = await Deno.openKv();
 
 export const setKv = async (
   field: string,
-  id: string,
-  value: pkm_basic | `${string}-${string}-${string}-${string}-${string}` | npc
+  id: string | number,
+  value: kv_data
 ) => {
   return await kv.set([field, id], value);
 };
@@ -34,6 +34,12 @@ export const setNpc = async (id: string, data: npc) => {
   const response = await setKv("npc-basic", id, data);
 
   return response.ok;
+};
+
+export const getNpc = async (id: string) => {
+  const response = await getKv("npc-basic", id);
+
+  return response.value as npc;
 };
 
 export const setAsset = async (data: params_set_functios) => {

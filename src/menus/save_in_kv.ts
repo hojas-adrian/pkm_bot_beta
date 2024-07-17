@@ -4,7 +4,7 @@ import onSaveKVCallbackHandler from "../handlers/on_send_kv_callback_handler.ts"
 import MyContext from "../helpers/context.ts";
 import currentoSave from "../payloads/current_to_save.ts";
 
-export default new Menu<MyContext>("greet-me")
+export default new Menu<MyContext>("saveInKv")
   .text(
     {
       text: "Cancelar",

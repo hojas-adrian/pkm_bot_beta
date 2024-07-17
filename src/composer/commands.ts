@@ -4,11 +4,13 @@ import isAdmin from "../middlewares/is_admin.ts";
 import onAssetCommandHandler from "../handlers/on_add_asset_command_handler.ts";
 import onClearDataCommandHandler from "../handlers/on_clear_data_command_handler.ts";
 import onInfoCommandHandler from "../handlers/on_info_command_handler.ts";
+import onStarCommandHandler from "../handlers/on_start_command_handler.ts";
 
 const composer = new Composer<MyContext>();
 
 composer.command("addasset", isAdmin, onAssetCommandHandler);
 composer.command("cleardata", isAdmin, onClearDataCommandHandler);
 composer.command("info", isAdmin, onInfoCommandHandler);
+composer.command("start", onStarCommandHandler);
 
 export default composer;

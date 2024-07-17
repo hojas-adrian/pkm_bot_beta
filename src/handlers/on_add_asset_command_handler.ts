@@ -2,7 +2,7 @@ import { InputFile } from "../deps.ts";
 import MyContext from "../helpers/context.ts";
 import { setDatatoSave } from "../helpers/session_actions.ts";
 import { addStickerId, getData, getDataString } from "../helpers/utils.ts";
-import greet from "../menus/save_in_kv.ts";
+import saveInKVButton from "../menus/save_in_kv.ts";
 
 export default async (ctx: MyContext) => {
   if (!ctx.message?.reply_to_message?.document?.file_id) {
@@ -34,7 +34,7 @@ export default async (ctx: MyContext) => {
   const output = addStickerId(data, file_id);
 
   await ctx.reply(getDataString(output), {
-    reply_markup: greet,
+    reply_markup: saveInKVButton,
   });
 
   setDatatoSave(ctx, output);

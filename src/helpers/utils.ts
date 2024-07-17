@@ -3,6 +3,7 @@ import { User, ChatFullInfo } from "../deps.ts";
 import { input, params_set_functios } from "./models.ts";
 import { VERSION } from "./constants.ts";
 import { isAdmin, isSuperAdmin } from "./actions.ts";
+import { getNpc } from "./kv_actions.ts";
 
 export const name = (user: User) =>
   user.username ? `@${user.username}` : user.first_name || "";
@@ -157,4 +158,29 @@ export const addStickerId = (
         },
       };
   }
+};
+
+export const getNpcSticker = async (ctx: MyContext, id: string) => {
+  if (!ctx.session.group.cache) {
+    ctx.session.group.cache = { npc: {} };
+  }
+
+  const cached = ctx.session.group.cache.npc?.[id];
+
+  if (!cached) {
+    const fetched = await getNpc(id);
+
+    if (!ctx.session.group.cache.npc) {
+      ctx.session.group.cache.npc = {};
+    }
+
+    ctx.session.group.cache.npc[id] = {
+      file_id: fetched.file_id,
+      name: fetched.name,
+    };
+
+    return fetched;
+  }
+
+  return cached;
 };
