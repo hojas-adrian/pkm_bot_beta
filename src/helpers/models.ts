@@ -6,17 +6,16 @@ export type pkm_basic = {
   sex?: "male" | "female";
 };
 
-export type kv_data =
-  | pkm_basic
-  | npc
-  | user_data
-  | `${string}-${string}-${string}-${string}-${string}`;
+export type kv_data = pkm_basic | npc | user_data;
+// | `${string}-${string}-${string}-${string}-${string}`;
 
 export type npc = {
   id: string;
   file_id: string;
   name: string;
 };
+
+export type KVkey = number | string;
 
 export type user_data = {
   id: number;

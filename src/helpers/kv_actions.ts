@@ -1,4 +1,10 @@
-import { pkm_basic, kv_data, npc, params_set_functios } from "./models.ts";
+import {
+  pkm_basic,
+  kv_data,
+  npc,
+  params_set_functios,
+  KVkey,
+} from "./models.ts";
 
 const kv = await Deno.openKv();
 
@@ -10,7 +16,7 @@ export const setKv = async (
   return await kv.set([field, id], value);
 };
 
-export const delKv = async (field: string, id: string | number) => {
+export const delKv = async (field: string, id: KVkey) => {
   await kv.delete([field, id]);
 };
 

@@ -184,3 +184,11 @@ export const getNpcSticker = async (ctx: MyContext, id: string) => {
 
   return cached;
 };
+
+export const getMatch = (ctx: MyContext) => {
+  if (ctx.match === "" || typeof ctx.match !== "string") {
+    return false;
+  }
+
+  return ctx.match;
+};

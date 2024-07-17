@@ -1,4 +1,4 @@
-import { npc, params_set_functios } from "./models.ts";
+import { params_set_functios } from "./models.ts";
 
 export type SessionData = {
   admin?: SessionAdmin;

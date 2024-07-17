@@ -1,7 +1,12 @@
 import { InputFile } from "../deps.ts";
 import MyContext from "../helpers/context.ts";
 import { setDatatoSave } from "../helpers/session_actions.ts";
-import { addStickerId, getData, getDataString } from "../helpers/utils.ts";
+import {
+  addStickerId,
+  getData,
+  getDataString,
+  getMatch,
+} from "../helpers/utils.ts";
 import saveInKVButton from "../menus/save_in_kv.ts";
 
 export default async (ctx: MyContext) => {
@@ -9,7 +14,9 @@ export default async (ctx: MyContext) => {
     return await ctx.reply("responde a un documento comepinga");
   }
 
-  if (ctx.match === "" || typeof ctx.match !== "string") {
+  const match = getMatch(ctx);
+
+  if (!match) {
     return await ctx.reply("Y los datos? :)");
   }
 
@@ -17,7 +24,7 @@ export default async (ctx: MyContext) => {
     return await ctx.reply("ya hay un pokemon en proceso");
   }
 
-  const data = getData(ctx.match);
+  const data = getData(match);
 
   if (!data) {
     return ctx.reply("algo hiciste mal");
