@@ -1,26 +1,16 @@
-import {
-  pkm_basic,
-  kv_data,
-  npc,
-  params_set_functios,
-  KVkey,
-} from "./models.ts";
+import { pkm_basic, kv_data, npc, data_params, kv_id } from "./models.ts";
 
 const kv = await Deno.openKv();
 
-export const setKv = async (
-  field: string,
-  id: string | number,
-  value: kv_data
-) => {
+export const setKv = async (field: string, id: kv_id, value: kv_data) => {
   return await kv.set([field, id], value);
 };
 
-export const delKv = async (field: string, id: KVkey) => {
+export const delKv = async (field: string, id: kv_id) => {
   await kv.delete([field, id]);
 };
 
-export const getKv = async (field: string, id: string | number) => {
+export const getKv = async (field: string, id: kv_id) => {
   return await kv.get<kv_data>([field, id]);
 };
 
@@ -48,7 +38,7 @@ export const getNpc = async (id: string) => {
   return response.value as npc;
 };
 
-export const setAsset = async (data: params_set_functios) => {
+export const setAsset = async (data: data_params) => {
   switch (data.type) {
     case "npc":
       return await setNpc(data.data.id, data.data);
@@ -59,4 +49,9 @@ export const setAsset = async (data: params_set_functios) => {
     default:
       return false;
   }
+};
+
+export const fDellKV = async (match: string) => {
+  const iter = kv.list<kv_data>({ prefix: [match] });
+  for await (const res of iter) await delKv(match, res.value.id);
 };

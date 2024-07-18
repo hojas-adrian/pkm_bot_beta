@@ -1,5 +1,9 @@
 import { haveId, sendMessage, sendSticker } from "./utils.ts";
-import { ADMINS_IDS, POKEDEX, SUPER_ADMINS_IDS } from "./constants.ts";
+import {
+  ADMINS_IDS,
+  ASSETS_CHANNEL_ID,
+  SUPER_ADMINS_IDS,
+} from "./constants.ts";
 import MyContext from "./context.ts";
 
 export const isAdmin = (ctx: MyContext) => {
@@ -23,7 +27,7 @@ export const isSuperAdmin = (ctx: MyContext) => {
 };
 
 export const sendStickerToPokedex = async (ctx: MyContext, sticker: string) => {
-  return await sendSticker(ctx, POKEDEX, sticker);
+  return await sendSticker(ctx, ASSETS_CHANNEL_ID, sticker);
 };
 
 export const sendMessageToPokedex = async (
@@ -31,5 +35,5 @@ export const sendMessageToPokedex = async (
   message: string,
   reply?: number
 ) => {
-  return await sendMessage(ctx, POKEDEX, message, reply);
+  return await sendMessage(ctx, ASSETS_CHANNEL_ID, message, reply);
 };

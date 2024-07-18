@@ -1,6 +1,6 @@
 import MyContext from "./context.ts";
 import { User, ChatFullInfo } from "../deps.ts";
-import { input, params_set_functios } from "./models.ts";
+import { match, data_params } from "./models.ts";
 import { VERSION } from "./constants.ts";
 import { isAdmin, isSuperAdmin } from "./actions.ts";
 import { getNpc } from "./kv_actions.ts";
@@ -36,7 +36,7 @@ export const sendSticker = async (
     },
   });
 
-export const getDataString = (data: params_set_functios) => {
+export const getDataString = (data: data_params) => {
   switch (data.type) {
     case "pkm": {
       return `type: ${data.type}\nname: ${data.data.name} ${
@@ -92,7 +92,7 @@ const getRole = (ctx: MyContext) => {
 };
 
 export const getData = (text: string) => {
-  const [type, id, name, freq, sex] = text.split(" . ") as input;
+  const [type, id, name, freq, sex] = text.split(" . ") as match;
 
   switch (type) {
     case "npc":

@@ -1,5 +1,11 @@
 import MyContext from "./context.ts";
-import { params_set_functios } from "./models.ts";
+import { data_params } from "./models.ts";
+
+export const setDatatoSave = (ctx: MyContext, data: data_params) => {
+  ctx.session.admin = {
+    toSave: data,
+  };
+};
 
 export const deleteDatatoSave = (ctx: MyContext) => {
   ctx.session.admin = undefined;
@@ -7,10 +13,4 @@ export const deleteDatatoSave = (ctx: MyContext) => {
 
 export const getDatatoSave = (ctx: MyContext) => {
   return ctx.session.admin?.toSave || false;
-};
-
-export const setDatatoSave = (ctx: MyContext, data: params_set_functios) => {
-  ctx.session.admin = {
-    toSave: data,
-  };
 };
