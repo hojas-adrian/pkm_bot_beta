@@ -1,4 +1,12 @@
-import { pkm_basic, kv_data, npc, data_params, kv_id } from "./models.ts";
+import {
+  pkm_basic,
+  kv_data,
+  npc,
+  data_params,
+  kv_id,
+  region_data,
+  pkm_list,
+} from "./models.ts";
 
 const kv = await Deno.openKv();
 
@@ -38,6 +46,18 @@ export const getNpc = async (id: string) => {
   return response.value as npc;
 };
 
+export const setRegion = async (id: string, data: region_data) => {
+  const response = await setKv("region_data", id, data);
+
+  return response.ok;
+};
+
+export const setPkmList = async (id: string, data: pkm_list) => {
+  const response = await setKv("pkm_list", id, data);
+
+  return response.ok;
+};
+
 export const setAsset = async (data: data_params) => {
   switch (data.type) {
     case "npc":
@@ -53,5 +73,7 @@ export const setAsset = async (data: data_params) => {
 
 export const fDellKV = async (match: string) => {
   const iter = kv.list<kv_data>({ prefix: [match] });
-  for await (const res of iter) await delKv(match, res.value.id);
+  for await (const res of iter) {
+    await delKv(match, res.value.id);
+  }
 };

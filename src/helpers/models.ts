@@ -1,4 +1,4 @@
-export type kv_data = pkm_basic | npc | user_data;
+export type kv_data = pkm_basic | npc | user_data | region_data | pkm_list;
 
 export type kv_id = number | string;
 
@@ -6,7 +6,6 @@ export type pkm_basic = {
   id: string;
   file_id: string;
   name: string;
-  freq: number;
   sex?: "male" | "female";
 };
 
@@ -24,11 +23,25 @@ export type user_data = {
   };
 };
 
+export type region_data = {
+  id: string;
+  name: string;
+  places: string[];
+};
+
+export type pkm_list = {
+  id: string;
+  data: {
+    id: string;
+    where: string;
+    freq: number;
+  }[];
+};
+
 export type match = pkm_basic_match | npc_match;
 
 export type pkm_basic_match = [
   "pkm",
-  string,
   string,
   string,
   "male" | "female" | undefined

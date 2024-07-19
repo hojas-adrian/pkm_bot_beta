@@ -41,9 +41,7 @@ export const getDataString = (data: data_params) => {
     case "pkm": {
       return `type: ${data.type}\nname: ${data.data.name} ${
         data.data.sex ? (data.data.sex === "male" ? "♂" : "♀") : ""
-      }\nfrecuencia: ${data.data.freq}\nid: ${data.data.file_id}\n\n#${
-        data.data.id
-      }`;
+      }\nid: ${data.data.file_id}\n\n#${data.data.id}`;
     }
 
     case "npc": {
@@ -92,7 +90,7 @@ const getRole = (ctx: MyContext) => {
 };
 
 export const getData = (text: string) => {
-  const [type, id, name, freq, sex] = text.split(" . ") as match;
+  const [type, id, name, sex] = text.split(" . ") as match;
 
   switch (type) {
     case "npc":
@@ -110,7 +108,6 @@ export const getData = (text: string) => {
         data: {
           id,
           name,
-          freq: +freq,
           sex,
         },
       };
@@ -124,7 +121,6 @@ export const addStickerId = (
         data: {
           id: string;
           name: string;
-          freq?: undefined;
           sex?: undefined;
         };
       }
@@ -133,7 +129,6 @@ export const addStickerId = (
         data: {
           id: string;
           name: string;
-          freq: number;
           sex: "male" | "female" | undefined;
         };
       },
