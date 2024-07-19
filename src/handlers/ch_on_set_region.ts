@@ -12,10 +12,11 @@ export default async (ctx: MyContext) => {
 
     for (const key in placesData) {
       const typedKey = key as keyof typeof placesData;
-      placesName.push(placesData[typedKey].name);
+      placesName.push(typedKey);
 
       await setPkmList(typedKey, {
         id: typedKey,
+        place: placesData[typedKey].name,
         data: placesData[typedKey].pkm,
       });
     }

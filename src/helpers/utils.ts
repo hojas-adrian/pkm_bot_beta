@@ -54,7 +54,7 @@ export const getUserData = (user: User) => {
   return `👤 ${user.first_name}\n├─ <a href="t.me/${user.username}">@${user.username}</a>\n├─ <a href="tg://user?id=${user.id}">${user.id}</a>\n└─ #a${user.id}`;
 };
 
-export const getChatData = (chat: ChatFullInfo) => {
+export const getChatInfo = (chat: ChatFullInfo) => {
   const link = chat.type !== "private" && chat.invite_link;
 
   return `👥 ${chat.title}${

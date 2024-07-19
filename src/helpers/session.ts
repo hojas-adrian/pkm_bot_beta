@@ -4,6 +4,7 @@ export type SessionData = {
   admin?: SessionAdmin;
   user: SessionUser;
   group: SessionGroup;
+  beta: SessionBeta;
 };
 
 export type SessionAdmin = {
@@ -43,4 +44,14 @@ export type SessionGroup = {
 
 export const initialGroup = (): SessionGroup => {
   return {};
+};
+
+export type SessionBeta = {
+  enabled: boolean;
+};
+
+export const initialBeta = () => {
+  return {
+    enabled: false,
+  };
 };

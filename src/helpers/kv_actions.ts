@@ -6,6 +6,7 @@ import {
   kv_id,
   region_data,
   pkm_list,
+  chat_data,
 } from "./models.ts";
 
 const kv = await Deno.openKv();
@@ -56,6 +57,24 @@ export const setPkmList = async (id: string, data: pkm_list) => {
   const response = await setKv("pkm_list", id, data);
 
   return response.ok;
+};
+
+export const getPkmList = async (id: string) => {
+  const response = await getKv("pkm_list", id);
+
+  return response.value as pkm_list;
+};
+
+export const setChatData = async (id: number, data: chat_data) => {
+  const response = await setKv("chat_data", id, data);
+
+  return response.ok;
+};
+
+export const getChatData = async (id: number) => {
+  const response = await getKv("chat_data", id);
+
+  return response.value as chat_data;
 };
 
 export const setAsset = async (data: data_params) => {

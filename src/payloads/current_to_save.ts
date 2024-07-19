@@ -8,5 +8,5 @@ export default (ctx: MyContext) => {
     return "";
   }
 
-  return payload.id;
+  return payload.data.id;
 };

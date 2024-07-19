@@ -1,4 +1,10 @@
-export type kv_data = pkm_basic | npc | user_data | region_data | pkm_list;
+export type kv_data =
+  | pkm_basic
+  | npc
+  | user_data
+  | region_data
+  | pkm_list
+  | chat_data;
 
 export type kv_id = number | string;
 
@@ -23,6 +29,12 @@ export type user_data = {
   };
 };
 
+export type chat_data = {
+  id: number;
+  region: string;
+  place: string;
+};
+
 export type region_data = {
   id: string;
   name: string;
@@ -31,6 +43,7 @@ export type region_data = {
 
 export type pkm_list = {
   id: string;
+  place: string;
   data: {
     id: string;
     where: string;

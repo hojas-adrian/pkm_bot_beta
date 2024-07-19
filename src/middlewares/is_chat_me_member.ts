@@ -1,8 +1,7 @@
 import { NextFunction, Context } from "../deps.ts";
-import { STAFF_GROUP_ID } from "../helpers/constants.ts";
 
 export default async (ctx: Context, next: NextFunction) => {
-  if (ctx.chat?.id === +STAFF_GROUP_ID) {
+  if (ctx.myChatMember?.new_chat_member.user.id === ctx.me.id) {
     await next();
   }
 };

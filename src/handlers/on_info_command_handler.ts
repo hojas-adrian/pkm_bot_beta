@@ -1,5 +1,5 @@
 import MyContext from "../helpers/context.ts";
-import { getBotData, getChatData, getUserData } from "../helpers/utils.ts";
+import { getBotData, getChatInfo, getUserData } from "../helpers/utils.ts";
 
 export default async (ctx: MyContext) => {
   if (ctx.message?.reply_to_message) {
@@ -20,5 +20,5 @@ export default async (ctx: MyContext) => {
 
   const chatData = await ctx.api.getChat(group.id);
 
-  return await ctx.reply(`${getChatData(chatData)}`, { parse_mode: "HTML" });
+  return await ctx.reply(`${getChatInfo(chatData)}`, { parse_mode: "HTML" });
 };
