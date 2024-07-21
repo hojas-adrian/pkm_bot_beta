@@ -1,4 +1,4 @@
-import { data_params, pkm_basic } from "./models.ts";
+import { data_params, pkm_cache } from "./models.ts";
 
 export type SessionData = {
   admin?: SessionAdmin;
@@ -31,19 +31,22 @@ export type SessionGroup = {
     biome: string;
   };
 
-  cache?: {
+  cache: {
     npc?: {
       [key: string]: {
         name: string;
         file_id: string;
       };
     };
-    pkm?: pkm_basic[];
+    pkm?: {
+      total: number;
+      pkm: pkm_cache[];
+    };
   };
 };
 
 export const initialGroup = (): SessionGroup => {
-  return {};
+  return { cache: {} };
 };
 
 export type SessionBeta = {

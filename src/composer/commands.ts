@@ -9,22 +9,19 @@ import onDeleteAsset from "../handlers/ch_on_delete_asset.ts";
 import onInitData from "../handlers/ch_on_set_region.ts";
 import onDeleteDB from "../handlers/on_clear_db_data_command_handler.ts";
 import onShowInfo from "../handlers/on_info_command_handler.ts";
-import onStart from "../handlers/on_start_command_handler.ts";
-import metrics from "../middlewares/metrics.ts";
-import i from "../middlewares/init_in_group.ts";
+import startRoute from "./start_route.ts";
 
 const composer = new Composer<MyContext>();
 // admin commands
 composer.command("add", isStaffGroup, isAdmin, onAddAsset);
 composer.command("clear", isStaffGroup, isAdmin, onClearAsset);
 composer.command("delete", isStaffGroup, isAdmin, onDeleteAsset);
-composer.command("aaa", i);
 
 composer.command("info", isAdmin, onShowInfo);
 // super admin commands
 composer.command("init", isSuperAdmin, onInitData);
 composer.command("deletedb", isSuperAdmin, onDeleteDB);
 // basic commands
-composer.command("start", metrics, onStart);
+composer.command("start", startRoute);
 
 export default composer;

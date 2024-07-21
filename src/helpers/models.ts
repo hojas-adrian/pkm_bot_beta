@@ -15,6 +15,10 @@ export type pkm_basic = {
   sex?: "male" | "female";
 };
 
+export type pkm_cache = pkm_basic & {
+  prob: number;
+};
+
 export type npc = {
   id: string;
   file_id: string;

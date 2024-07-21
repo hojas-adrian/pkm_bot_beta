@@ -50,7 +50,7 @@ export const getDataString = (data: data_params) => {
   }
 };
 
-export const getUserData = (user: User) => {
+export const getUserInfo = (user: User) => {
   return `👤 ${user.first_name}\n├─ <a href="t.me/${user.username}">@${user.username}</a>\n├─ <a href="tg://user?id=${user.id}">${user.id}</a>\n└─ #a${user.id}`;
 };
 
