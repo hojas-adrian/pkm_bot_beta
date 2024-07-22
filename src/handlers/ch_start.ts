@@ -7,7 +7,7 @@ export default async (ctx: MyContext) => {
   await ctx.replyWithSticker(oakSticker.file_id);
 
   await ctx.reply(
-    `<b>${oakSticker.name}:</b> <blockquote><pre>hola de nuevo. Veamos, has capturado algun poqumon nuevo?</pre></blockquote>`,
+    `<b>${oakSticker.name}:</b> <blockquote><pre>hola de nuevo. Veamos, has capturado algun pokemon nuevo?</pre></blockquote>`,
     {
       reply_markup: pkmListButton,
       parse_mode: "HTML",
