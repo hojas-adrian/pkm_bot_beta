@@ -8,6 +8,8 @@ export default async (ctx: MyContext, next: NextFunction) => {
   }
 
   if (ctx.session.group.cache.zone || (await getChatData(ctx.chat?.id))) {
+    ctx.reply(`${ctx.session.group.cache.zone}`);
+    ctx.reply(`${await getChatData(ctx.chat?.id)}`);
     return await next();
   }
 };

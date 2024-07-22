@@ -9,6 +9,6 @@ import random from "../middlewares/random.ts";
 const composer = new Composer<MyContext>();
 
 // composer.on("my_chat_member:from:me", isNewChatMember, showGroupInfo);
-composer.use(isNotNewGroup, /* random, */ apparience);
+composer.use(isNotNewGroup, random, apparience);
 
 export default composer;
