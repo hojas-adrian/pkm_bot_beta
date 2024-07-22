@@ -4,7 +4,6 @@ export type SessionData = {
   admin?: SessionAdmin;
   user: SessionUser;
   group: SessionGroup;
-  beta: SessionBeta;
 };
 
 export type SessionAdmin = {
@@ -26,12 +25,12 @@ export const initialUser = (): SessionUser => {
 };
 
 export type SessionGroup = {
-  type?: {
-    zone: string;
-    biome: string;
-  };
-
   cache: {
+    zone?: {
+      name: string;
+      id: string;
+      place: string;
+    };
     npc?: {
       [key: string]: {
         name: string;
@@ -47,14 +46,4 @@ export type SessionGroup = {
 
 export const initialGroup = (): SessionGroup => {
   return { cache: {} };
-};
-
-export type SessionBeta = {
-  enabled: boolean;
-};
-
-export const initialBeta = () => {
-  return {
-    enabled: false,
-  };
 };

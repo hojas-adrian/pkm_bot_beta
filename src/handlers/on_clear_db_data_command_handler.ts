@@ -12,5 +12,5 @@ export default async (ctx: MyContext) => {
 
   await fDellKV(match);
 
-  return await ctx.reply("datos borrados");
+  return await ctx.react("👌");
 };

@@ -1,11 +1,6 @@
 import { Composer, limit, session } from "../deps.ts";
 import MyContext from "../helpers/context.ts";
-import {
-  initialAdmin,
-  initialGroup,
-  initialUser,
-  initialBeta,
-} from "../helpers/session.ts";
+import { initialAdmin, initialGroup, initialUser } from "../helpers/session.ts";
 
 const composer = new Composer<MyContext>();
 
@@ -21,9 +16,6 @@ composer.use(
     },
     group: {
       initial: initialGroup,
-    },
-    beta: {
-      initial: initialBeta,
     },
   })
 );

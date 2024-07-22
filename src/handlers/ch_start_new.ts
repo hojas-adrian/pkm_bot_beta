@@ -1,5 +1,5 @@
 import MyContext from "../helpers/context.ts";
-import { setKv } from "../helpers/kv_actions.ts";
+import { setUserData } from "../helpers/kv_actions.ts";
 import { getNpcSticker } from "../helpers/utils.ts";
 
 export default async (ctx: MyContext) => {
@@ -10,7 +10,7 @@ export default async (ctx: MyContext) => {
     return;
   }
 
-  await setKv("user", ctx.from.id, {
+  await setUserData(ctx.from.id, {
     id: ctx.from.id,
     pokemons: [],
     objects: {
@@ -25,5 +25,5 @@ export default async (ctx: MyContext) => {
     }
   );
 
-  return (ctx.session.user.isNew = false);
+  ctx.session.user.isNew = false;
 };

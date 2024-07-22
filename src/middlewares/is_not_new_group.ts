@@ -8,8 +8,6 @@ export default async (ctx: MyContext, next: NextFunction) => {
   }
 
   if (ctx.session.group.cache.zone || (await getChatData(ctx.chat?.id))) {
-    return;
+    return await next();
   }
-
-  return await next();
 };

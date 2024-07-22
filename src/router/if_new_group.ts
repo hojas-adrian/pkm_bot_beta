@@ -1,13 +1,13 @@
 import { Router } from "../deps.ts";
 import MyContext from "../helpers/context.ts";
-import { getUserData } from "../helpers/kv_actions.ts";
+import { getChatData } from "../helpers/kv_actions.ts";
 
 const router = new Router<MyContext>(async (ctx) => {
-  if (!ctx.from) {
+  if (!ctx.chat) {
     return;
   }
 
-  if (ctx.session.user.isNew && !(await getUserData(ctx.from.id))) {
+  if (!ctx.session.group.cache.zone && !(await getChatData(ctx.chat.id))) {
     return "isNew";
   }
 

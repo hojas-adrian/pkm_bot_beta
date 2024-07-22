@@ -54,6 +54,12 @@ export const setRegion = async (id: string, data: region_data) => {
   return response.ok;
 };
 
+export const getRegion = async (id: string) => {
+  const response = await getKv("region_data", id);
+
+  return response.value as region_data;
+};
+
 export const setPkmList = async (id: string, data: pkm_list) => {
   const response = await setKv("pkm_list", id, data);
 
@@ -79,7 +85,7 @@ export const getChatData = async (id: number) => {
 };
 
 export const setUserData = async (id: number, data: user_data) => {
-  const response = await setKv("chat_data", id, data);
+  const response = await setKv("user_data", id, data);
 
   return response.ok;
 };
@@ -101,6 +107,23 @@ export const setAsset = async (data: data_params) => {
     default:
       return false;
   }
+};
+
+export const getAll = async (prefix: string) => {
+  const iter = kv.list<kv_data>({ prefix: [prefix] });
+  const data = [];
+  for await (const res of iter) {
+    const item = res.value;
+    data.push(item);
+  }
+
+  return data;
+};
+
+export const getAllRegions = async () => {
+  const response = await getAll("region_data");
+
+  return response as region_data[];
 };
 
 export const fDellKV = async (match: string) => {

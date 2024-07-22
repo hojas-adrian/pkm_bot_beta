@@ -3,7 +3,7 @@ import { User, ChatFullInfo } from "../deps.ts";
 import { match, data_params } from "./models.ts";
 import { VERSION } from "./constants.ts";
 import { isAdmin, isSuperAdmin } from "./actions.ts";
-import { getNpc } from "./kv_actions.ts";
+import { getAllRegions, getNpc, setChatData } from "./kv_actions.ts";
 
 export const name = (user: User) =>
   user.username ? `@${user.username}` : user.first_name || "";
@@ -156,10 +156,6 @@ export const addStickerId = (
 };
 
 export const getNpcSticker = async (ctx: MyContext, id: string) => {
-  if (!ctx.session.group.cache) {
-    ctx.session.group.cache = { npc: {} };
-  }
-
   const cached = ctx.session.group.cache.npc?.[id];
 
   if (!cached) {
@@ -186,4 +182,47 @@ export const getMatch = (ctx: MyContext) => {
   }
 
   return ctx.match;
+};
+
+export const randomIndex = (length: number) => {
+  return Math.floor(Math.random() * length);
+};
+
+export const createNewChat = async (ctx: MyContext) => {
+  if (!ctx.chat) {
+    return;
+  }
+
+  const regions = await getAllRegions();
+
+  const region = regions[randomIndex(regions.length)];
+  const place = region.places[randomIndex(region.places.length)];
+
+  const chat = {
+    id: ctx.chat.id,
+    region: region.id,
+    place: place,
+  };
+
+  await setChatData(chat.id, chat);
+
+  ctx.session.group.cache.zone = {
+    id: region.id,
+    name: region.name,
+    place: place,
+  };
+
+  return chat;
+};
+
+export const getZoneName = async (ctx: MyContext) => {
+  if (!ctx.chat) {
+    return;
+  }
+
+  if (!ctx.session.group.cache.zone) {
+    await createNewChat(ctx);
+  }
+
+  return ctx.session.group.cache.zone;
 };

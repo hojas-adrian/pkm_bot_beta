@@ -9,7 +9,8 @@ import onDeleteAsset from "../handlers/ch_on_delete_asset.ts";
 import onInitData from "../handlers/ch_on_set_region.ts";
 import onDeleteDB from "../handlers/on_clear_db_data_command_handler.ts";
 import onShowInfo from "../handlers/on_info_command_handler.ts";
-import startRoute from "./start_route.ts";
+import startRoute from "./start_user_route.ts";
+import chShowGroupInfo from "../handlers/ch_show_group_info.ts";
 
 const composer = new Composer<MyContext>();
 // admin commands
@@ -23,5 +24,6 @@ composer.command("init", isSuperAdmin, onInitData);
 composer.command("deletedb", isSuperAdmin, onDeleteDB);
 // basic commands
 composer.command("start", startRoute);
+composer.command("turnon", isSuperAdmin, chShowGroupInfo);
 
 export default composer;

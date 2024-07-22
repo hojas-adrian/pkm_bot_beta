@@ -28,5 +28,5 @@ export default async (ctx: MyContext) => {
     });
   }
 
-  await ctx.reply("datos enviados");
+  await ctx.react("👌");
 };
